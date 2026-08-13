@@ -33,7 +33,7 @@ const totalFormatter = new Intl.NumberFormat('en-US', {
 
 const OrderRow = memo(function OrderRow({ order }: { order: Order }) {
   return (
-    <tr data-order-id={order.id}>
+    <tr data-order-id={order.id} className="order-row">
       {COLUMNS.map((column) => (
         <td key={column.key} className="border-b border-zinc-200 px-2 py-1">
           {column.key === 'total'
@@ -77,7 +77,7 @@ function Filters() {
   const { q, statuses } = readFilters(searchParams)
 
   return (
-    <div className="mb-4 flex flex-wrap items-center gap-4">
+    <div className="order-filters mb-4 flex flex-wrap items-center gap-4">
       <input
         defaultValue={q}
         placeholder="Search order number"
@@ -150,7 +150,7 @@ function Rows() {
   }
 
   return (
-    <div onKeyDown={handleKeyDown}>
+    <div className="order-scroll" onKeyDown={handleKeyDown}>
       <table className="w-full border-collapse text-left text-sm">
         <thead>
           <tr>

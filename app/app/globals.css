@@ -24,3 +24,38 @@ body {
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
 }
+
+/* Keep off-screen rows in the DOM but skip their rendering work. */
+.order-row {
+  content-visibility: auto;
+  contain-intrinsic-size: auto 44px;
+}
+
+@media print {
+  /* Off-screen rows must paint fully so nothing is dropped from the printout. */
+  .order-row {
+    content-visibility: visible;
+  }
+
+  /* Drop the chrome that doesn't belong on paper. */
+  .order-filters,
+  .order-side-panel {
+    display: none !important;
+  }
+
+  /* Release any scroll-container height cap so every row flows onto pages. */
+  .order-scroll {
+    max-height: none !important;
+    height: auto !important;
+    overflow: visible !important;
+  }
+
+  /* Fixed layout gives predictable column widths and clean page breaks. */
+  table {
+    table-layout: fixed;
+  }
+
+  .order-row {
+    break-inside: avoid;
+  }
+}
