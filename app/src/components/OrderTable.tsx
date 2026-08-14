@@ -4,13 +4,7 @@ import { memo, useMemo, useRef, useState } from 'react'
 import { usePathname, useRouter, useSearchParams } from 'next/navigation'
 import { ORDERS, type Order } from '@/data/orders'
 
-const STATUSES: Order['status'][] = [
-  'PENDING',
-  'PICKING',
-  'SHIPPED',
-  'DELIVERED',
-  'CANCELLED',
-]
+const STATUSES: Order['status'][] = ['NEW', 'PICKING', 'SHIPPED', 'CANCELLED']
 
 const COLUMNS = [
   { key: 'orderNumber', label: 'Order #' },
@@ -54,7 +48,7 @@ const OrderRow = memo(function OrderRow({
       data-order-id={order.id}
       tabIndex={-1}
       aria-selected={selected}
-      className={`order-row ${selected ? 'bg-zinc-100' : ''}`}
+      className="order-row"
     >
       {COLUMNS.map((column) => (
         <td key={column.key} className="px-3 py-2">
@@ -86,15 +80,14 @@ function href(
 function Filters({ q, active }: { q: string; active: string[] }) {
   const router = useRouter()
   const pathname = usePathname()
-  const searchParams = useSearchParams()
-  const params = new URLSearchParams(searchParams.toString())
+  const params = new URLSearchParams(useSearchParams().toString())
 
   return (
     <div className="order-filters mb-4 flex flex-wrap items-center gap-4">
       <input
         defaultValue={q}
         placeholder="Search order number"
-        className="border border-zinc-300 px-2 py-1"
+        className="rounded border border-zinc-400 px-2 py-1"
         ref={(node) => {
           if (node && document.activeElement !== node && node.value !== q) {
             node.value = q
@@ -145,8 +138,7 @@ function SidePanel({
       ref={(node) => {
         if (node && autoFocus) node.focus()
       }}
-    className="order-side-panel fixed top-0 right-0 h-full w-80 overflow-auto border-l border-zinc-300 p-4 text-sm shadow-lg"
-      // className="order-side-panel fixed top-0 right-0 h-full w-80 overflow-auto border-l border-zinc-300 bg-white p-4 text-sm shadow-lg"
+      className="order-side-panel fixed top-0 right-0 h-full w-80 overflow-auto border-l border-zinc-400 p-4 text-sm shadow-lg"
     >
       <div className="mb-3 flex items-start justify-between">
         <h2 className="font-semibold">{order.orderNumber}</h2>
@@ -155,13 +147,13 @@ function SidePanel({
         </button>
       </div>
       <dl className="mb-4 grid grid-cols-2 gap-1">
-        <dt className="text-zinc-500">Customer</dt>
+        <dt className="opacity-60">Customer</dt>
         <dd>{order.customer}</dd>
-        <dt className="text-zinc-500">Status</dt>
+        <dt className="opacity-60">Status</dt>
         <dd>{order.status}</dd>
-        <dt className="text-zinc-500">Total</dt>
+        <dt className="opacity-60">Total</dt>
         <dd>{money.format(order.total)}</dd>
-        <dt className="text-zinc-500">Created</dt>
+        <dt className="opacity-60">Created</dt>
         <dd>{day.format(new Date(order.createdAt))}</dd>
       </dl>
       <table className="w-full border-collapse text-left">
@@ -182,7 +174,7 @@ function SidePanel({
           ))}
         </tbody>
       </table>
-      <p className="mt-3 text-xs text-zinc-500">Press Escape to close.</p>
+      <p className="mt-3 text-xs opacity-60">Press Escape to close.</p>
     </aside>
   )
 }
@@ -217,10 +209,10 @@ export function OrderTable() {
   const move = (delta: number) => {
     if (!filtered.length) return
     const i = filtered.findIndex((order) => order.id === selectedId)
-    const target = i < 0 ? 0 : Math.min(filtered.length - 1, Math.max(0, i + delta))
-    const next = filtered[target]
-    setSelectedId(next.id)
-    focusRow(next.id)
+    const target =
+      i < 0 ? 0 : Math.min(filtered.length - 1, Math.max(0, i + delta))
+    setSelectedId(filtered[target].id)
+    focusRow(filtered[target].id)
   }
 
   const closePanel = () => {
@@ -266,10 +258,10 @@ export function OrderTable() {
   if (shouldFocusPanel) focusedPanel.current = panelId
 
   return (
-    <div className="order-row" onKeyDown={onKeyDown}>
+    <div className="p-4" onKeyDown={onKeyDown}>
       <Filters q={q} active={statusKey ? statusKey.split(',') : []} />
 
-      <p className="order-filters mb-2 text-sm text-zinc-500">
+      <p className="order-count mb-2 text-sm opacity-60">
         {filtered.length} of {ORDERS.length} orders
       </p>
 
@@ -278,10 +270,7 @@ export function OrderTable() {
           <thead>
             <tr>
               {COLUMNS.map((column) => (
-                <th
-                  key={column.key}
-                  className="border-b border-zinc-300 px-2 py-1"
-                >
+                <th key={column.key} className="px-3 py-2">
                   {column.label}
                 </th>
               ))}

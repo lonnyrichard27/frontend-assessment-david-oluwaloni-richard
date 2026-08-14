@@ -2,19 +2,13 @@ export type Order = {
   id: string
   orderNumber: string
   customer: string
-  status: 'PENDING' | 'PICKING' | 'SHIPPED' | 'DELIVERED' | 'CANCELLED'
+  status: 'NEW' | 'PICKING' | 'SHIPPED' | 'CANCELLED'
   total: number
   createdAt: string
   items: { sku: string; name: string; qty: number; unitPrice: number }[]
 }
 
-const STATUSES = [
-  'PENDING',
-  'PICKING',
-  'SHIPPED',
-  'DELIVERED',
-  'CANCELLED',
-] as const
+const STATUSES = ['NEW', 'PICKING', 'SHIPPED', 'CANCELLED'] as const
 
 const CUSTOMERS = [
   'Aether Labs',
