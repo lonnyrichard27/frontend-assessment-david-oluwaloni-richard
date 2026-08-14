@@ -1,0 +1,142 @@
+@import "tailwindcss";
+
+:root {
+  --background: #ffffff;
+  --foreground: #171717;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #0a0a0a;
+    --foreground: #ededed;
+  }
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.order-table {
+  table-layout: fixed;
+  width: 100%;
+}
+
+.order-table th:nth-child(1) { width: 14%; }
+.order-table th:nth-child(2) { width: 34%; }
+.order-table th:nth-child(3) { width: 14%; }
+.order-table th:nth-child(4) { width: 14%; }
+.order-table th:nth-child(5) { width: 24%; }
+
+.order-table td {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.order-row:focus {
+  outline: 2px solid #2563eb;
+  outline-offset: -2px;
+}
+
+.order-scroll {
+  max-height: 70vh;
+  overflow: auto;
+  border: 1px solid color-mix(in srgb, var(--foreground) 15%, transparent);
+  border-radius: 6px;
+}
+
+.order-table thead th {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  background: var(--background);
+  font-weight: 600;
+  border-bottom: 2px solid color-mix(in srgb, var(--foreground) 25%, transparent);
+}
+
+.order-table td {
+  border-bottom: 1px solid color-mix(in srgb, var(--foreground) 10%, transparent);
+}
+
+.order-row:hover td {
+  background: color-mix(in srgb, var(--foreground) 6%, transparent);
+}
+
+.order-row[aria-selected='true'] td {
+  background: color-mix(in srgb, #2563eb 18%, transparent);
+}
+
+.order-table td:nth-child(4) {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+.order-filters input[type='text'],
+.order-filters input:not([type]) {
+  background: transparent;
+  color: inherit;
+  border-radius: 4px;
+}
+
+/* Side panel must follow the theme, not assume white. */
+.order-side-panel {
+  background: var(--background);
+  color: var(--foreground);
+}
+
+@media print {
+  :root {
+    --background: #ffffff;
+    --foreground: #000000;
+  }
+  .order-table thead th { position: static; }
+
+  body {
+    background: #ffffff !important;
+    color: #000000 !important;
+  }
+
+  .order-table,
+  .order-table th,
+  .order-table td {
+    color: #000000 !important;
+    border-color: #999999 !important;
+  }
+
+  .order-filters,
+  .order-side-panel {
+    display: none !important;
+  }
+
+  .order-scroll {
+    max-height: none !important;
+    height: auto !important;
+    overflow: visible !important;
+  }
+
+  .order-table thead {
+    display: table-header-group;
+  }
+
+  .order-row {
+    break-inside: avoid;
+  }
+
+  .order-row:focus {
+    outline: none;
+  }
+
+  .order-table td {
+    overflow: visible;
+    white-space: normal;
+  }
+}
