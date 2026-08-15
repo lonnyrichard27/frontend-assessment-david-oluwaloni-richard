@@ -244,6 +244,6 @@ What changed in how I work: I stopped testing flows that leave the app locally. 
 
 ## Q13
 
-First admin dashboard: This was a big dashboard for the whole staff of a bank, internal backend team built the apis and it was documented on swagger
+Bank staff dashboard. Used by branch staff, senior managers and the chairman. Staff opened customer accounts, placed PNDs and liens, and verified customer photos and ID through a third-party KYC API. RBAC decided what each role saw: managers could add and remove team members, the chairman had a department-performance view. The internal backend team built the APIs, documented in Swagger. The hardest part was rendering over fifteen graphs on one screen without the page stalling.
 
-The second dashboard: A fintech dashboard for a companys finanace management, distribution and tax disbursement automatically internal backend team built the apis and it was documented on swagger
+Fintech finance dashboard. Used by a media production company to manage crew payments, splitting them into automated instalments, with a wallet system behind it and tax disbursement handled automatically. The internal backend team built the APIs, documented in Swagger. The hardest part was modelling several productions running at once: each crew member could sit on multiple projects with separate instalment schedules, so the wallet had to keep per-project balances reconciled rather than one running total.
