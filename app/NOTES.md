@@ -2,7 +2,7 @@
 
 ## Constraints 1 and 2 together
 
-Constraint 1 rules out virtualisation. It only keeps the rows you can see in the DOM, so Ctrl-P would print about 30 rows out of 800 and Ctrl-F would not find an order that has not been scrolled to.
+Constraint 1 rules out virtualisation. It only keeps the rows you can see in the DOM, so Ctrl-P would print about 30 rows out of the filtered set and Ctrl-F would not find an order that has not been scrolled to.
 
 So every filtered row stays in the DOM, and I met constraint 2 by stopping rows re-rendering instead of removing them:
 

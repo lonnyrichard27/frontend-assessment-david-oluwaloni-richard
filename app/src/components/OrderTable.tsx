@@ -35,13 +35,7 @@ function cell(order: Order, key: ColumnKey) {
   return order[key]
 }
 
-const OrderRow = memo(function OrderRow({
-  order,
-  selected,
-}: {
-  order: Order
-  selected: boolean
-}) {
+const OrderRow = memo(function OrderRow({ order, selected }: { order: Order; selected: boolean }) {
   return (
     <tr
       id={`row-${order.id}`}
@@ -122,15 +116,7 @@ function Filters({ q, active }: { q: string; active: string[] }) {
   )
 }
 
-function SidePanel({
-  order,
-  onClose,
-  autoFocus,
-}: {
-  order: Order
-  onClose: () => void
-  autoFocus: boolean
-}) {
+function SidePanel({ order, onClose, autoFocus }: { order: Order; onClose: () => void; autoFocus: boolean }) {
   return (
     <aside
       tabIndex={-1}
@@ -258,7 +244,7 @@ export function OrderTable() {
   if (shouldFocusPanel) focusedPanel.current = panelId
 
   return (
-    <div className="p-4" onKeyDown={onKeyDown}>
+    <div className="p-4 mt-5" onKeyDown={onKeyDown}>
       <Filters q={q} active={statusKey ? statusKey.split(',') : []} />
 
       <p className="order-count mb-2 text-sm opacity-60">
